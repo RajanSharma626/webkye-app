@@ -11,6 +11,7 @@
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
     <meta name="author" content="@yield('author')">
+    <base href="{{ url('/') }}">
     <!-- Favicon img -->
     <link rel="shortcut icon" href="assets/images/favicon.png">
     <!-- Bootstarp min css -->

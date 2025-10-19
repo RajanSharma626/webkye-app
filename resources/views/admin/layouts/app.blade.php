@@ -61,7 +61,7 @@
                                 <div class="dropdown-menu dropdown-menu-end shadow-lg border-1 rounded-3">
                                     <div class="dropdown-header">
                                         <h6 class="fw-bold mb-0">{{ Auth::user()->name }}</h6>
-                                        <small class="text-muted">Email: {{ Auth::user()->email  }}</small>
+                                        <small class="text-muted">Email: {{ Auth::user()->email }}</small>
                                     </div>
                                     <div class="dropdown-divider"></div>
 
@@ -139,11 +139,16 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.faqs') ? 'active' : '' }}">
+                            <li
+                                class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.faqs') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('admin.faqs.index') }}">
                                     <span class="nav-icon-wrap">
                                         <span class="svg-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-help-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-help-circle" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <circle cx="12" cy="12" r="9" />
                                                 <path d="M12 16v.01" />
@@ -155,13 +160,19 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.testimonials') ? 'active' : '' }}">
+                            <li
+                                class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.testimonials') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('admin.testimonials.index') }}">
                                     <span class="nav-icon-wrap">
                                         <span class="svg-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-stars" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-stars" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M12 17.75l-6.172 3.245l1.18-6.873l-5-4.867l6.9-1l3.092-6.255l3.092 6.255l6.9 1l-5 4.867l1.18 6.873z" />
+                                                <path
+                                                    d="M12 17.75l-6.172 3.245l1.18-6.873l-5-4.867l6.9-1l3.092-6.255l3.092 6.255l6.9 1l-5 4.867l1.18 6.873z" />
                                             </svg>
                                         </span>
                                     </span>
@@ -169,11 +180,16 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.messages') ? 'active' : '' }}">
+                            <li
+                                class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.messages') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('admin.messages.index') }}">
                                     <span class="nav-icon-wrap">
                                         <span class="svg-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-mail" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <rect x="3" y="5" width="18" height="14" rx="2" />
                                                 <polyline points="3 7 12 13 21 7" />
@@ -181,19 +197,41 @@
                                         </span>
                                     </span>
                                     <span class="nav-link-text">Messages</span>
+                                    @if ($unreadMessagesCount > 0)
+                                        <span
+                                            class="badge badge-sm badge-soft-pink ms-auto">{{ $unreadMessagesCount }}</span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li
+                                class="nav-item mb-2 {{ str_starts_with(Route::currentRouteName(), 'admin.services') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.services.index') }}">
+                                    <span class="nav-icon-wrap">
+                                        <span class="svg-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-settings" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="nav-link-text">Services</span>
                                 </a>
                             </li>
 
                         </ul>
                     </div>
-
                 </div>
             </div>
             <!-- /Main Menu -->
         </div>
         <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
         <!-- /Vertical Nav -->
-
 
         <!-- Main Content -->
         @yield('content')
