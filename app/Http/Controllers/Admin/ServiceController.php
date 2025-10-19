@@ -16,7 +16,8 @@ class ServiceController extends Controller
      */
     public function index(): View
     {
-        return view("admin.services.index");
+        $services = \App\Models\Service::latest()->get();
+        return view("admin.services.index", compact('services'));
     }
 
     /**
@@ -33,27 +34,25 @@ class ServiceController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'star' => ['required', 'integer', 'min:1', 'max:5'],
             'title' => ['required', 'string', 'max:255'],
-            'comment' => ['required', 'string'],
-            'name' => ['required', 'string', 'max:255'],
-            'designation' => ['nullable', 'string', 'max:255'],
-            'position' => ['nullable', 'integer', 'min:0'],
-            'is_active' => ['nullable', 'boolean'],
-            'profile' => ['nullable', 'image', 'max:2048'],
+            'subtitle' => ['required', 'string', 'max:255'],
+            'short_description' => ['required', 'string'],
+            'detail' => ['required', 'string'],
+            'meta_title' => ['nullable', 'string', 'max:255'],
+            'meta_description' => ['nullable', 'string'],
+            'meta_keywords' => ['nullable', 'string'],
+            'banner' => ['nullable', 'image', 'max:2048'],
+            'icon' => ['nullable', 'string', 'max:255'],
         ]);
 
-        if ($request->hasFile('profile')) {
-            $path = $request->file('profile')->store('testimonials', 'public');
-            $validated['profile'] = $path;
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('services', 'public');
+            $validated['banner'] = $path;
         }
 
-        $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
-        $validated['position'] = $validated['position'] ?? 0;
+        \App\Models\Service::create($validated);
 
-        Testimonial::create($validated);
-
-        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial created successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service created successfully.');
     }
 
     /**
@@ -69,8 +68,8 @@ class ServiceController extends Controller
      */
     public function edit(string $id): View
     {
-        $testimonial = Testimonial::findOrFail($id);
-        return view('admin.testimonials.edit', compact('testimonial'));
+        $service = \App\Models\Service::findOrFail($id);
+        return view('admin.services.edit', compact('service'));
     }
 
     /**
@@ -78,33 +77,31 @@ class ServiceController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $testimonial = Testimonial::findOrFail($id);
+        $service = \App\Models\Service::findOrFail($id);
 
         $validated = $request->validate([
-            'star' => ['required', 'integer', 'min:1', 'max:5'],
             'title' => ['required', 'string', 'max:255'],
-            'comment' => ['required', 'string'],
-            'name' => ['required', 'string', 'max:255'],
-            'designation' => ['nullable', 'string', 'max:255'],
-            'position' => ['nullable', 'integer', 'min:0'],
-            'is_active' => ['nullable', 'boolean'],
-            'profile' => ['nullable', 'image', 'max:2048'],
+            'subtitle' => ['required', 'string', 'max:255'],
+            'short_description' => ['required', 'string'],
+            'detail' => ['required', 'string'],
+            'meta_title' => ['nullable', 'string', 'max:255'],
+            'meta_description' => ['nullable', 'string'],
+            'meta_keywords' => ['nullable', 'string'],
+            'banner' => ['nullable', 'image', 'max:2048'],
+            'icon' => ['nullable', 'string', 'max:255'],
         ]);
 
-        if ($request->hasFile('profile')) {
-            if ($testimonial->profile) {
-                Storage::disk('public')->delete($testimonial->profile);
+        if ($request->hasFile('banner')) {
+            if ($service->banner) {
+                Storage::disk('public')->delete($service->banner);
             }
-            $path = $request->file('profile')->store('testimonials', 'public');
-            $validated['profile'] = $path;
+            $path = $request->file('banner')->store('services', 'public');
+            $validated['banner'] = $path;
         }
 
-        $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
-        $validated['position'] = $validated['position'] ?? 0;
+        $service->update($validated);
 
-        $testimonial->update($validated);
-
-        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial updated successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service updated successfully.');
     }
 
     /**
@@ -112,12 +109,12 @@ class ServiceController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        $testimonial = Testimonial::findOrFail($id);
-        if ($testimonial->profile) {
-            Storage::disk('public')->delete($testimonial->profile);
+        $service = \App\Models\Service::findOrFail($id);
+        if ($service->banner) {
+            Storage::disk('public')->delete($service->banner);
         }
-        $testimonial->delete();
+        $service->delete();
 
-        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial deleted successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
     }
 }

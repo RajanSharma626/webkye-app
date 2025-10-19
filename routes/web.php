@@ -43,6 +43,10 @@ Route::get('/blogs', function () {
     return view('blog');
 });
 
+Route::get('/blog/blog-detail', function () {
+    return view('blog-details');
+});
+
 Route::get('/testimonials', function () {
     return view('testimonial');
 });
@@ -59,9 +63,15 @@ Route::get('/services/service-details', function () {
     return view('service-details');
 });
 
+Route::get('/case-studies/case-study-details', function () {
+    return view('case-study-details');
+});
+
+
+
 Route::middleware('guest')->group(function () {
-	Route::get('/admin-panel/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
-	Route::post('/admin-panel/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+    Route::get('/admin-panel/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+    Route::post('/admin-panel/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 });
 
 
@@ -70,7 +80,7 @@ Route::middleware('auth')->group(function () {
 
     //FAQs  
     Route::resource('/admin-panel/faqs', FaqController::class)->names('admin.faqs');
-    
+
     //Testimonials
     Route::resource('/admin-panel/testimonials', TestimonialController::class)->names('admin.testimonials');
 
@@ -82,7 +92,10 @@ Route::middleware('auth')->group(function () {
 
     //Services
     Route::resource('/admin-panel/services', ServiceController::class)->names('admin.services');
-    
+
+    //Case Studies
+    Route::resource('/admin-panel/case-studies', App\Http\Controllers\Admin\CaseStudyController::class)->names('admin.case-studies');
+
 
     //logout
     Route::post('/admin-panel/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
