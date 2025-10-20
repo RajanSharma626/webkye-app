@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Case Studies')
+@section('title', 'Blogs')
 
 @section('content')
     <div class="hk-pg-wrapper">
         <div class="container-xxl">
             <div class="hk-pg-header d-flex justify-content-between align-items-center">
-                <h4 class="hk-pg-title">Case Studies</h4>
-                <a href="{{ route('admin.case-studies.create') }}" class="btn btn-sm btn-primary">Add Case Study</a>
+                <h4 class="hk-pg-title">Blogs</h4>
+                <a href="{{ route('admin.blogs.create') }}" class="btn btn-sm btn-primary">Add Blog</a>
             </div>
 
             @if (session('success'))
@@ -17,53 +17,45 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-middle" id="caseStudiesTable">
+                        <table class="table align-middle" id="blogsTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Cover</th>
                                     <th>Title</th>
-                                    <th>Service</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Tags</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($caseStudies as $caseStudy)
+                                @forelse($blogs as $blog)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <img src="{{ asset($caseStudy->cover_image) }}" class="img-fluid rounded"
-                                                alt="Case Study Cover" style="width: 80px; height: auto;">
-                                        </td>
-                                        <td>{{ $caseStudy->title }}</td>
-                                        <td>{{ $caseStudy->service }}</td>
-                                        <td>{{ $caseStudy->start_date->format('M Y') }}</td>
-                                        <td>
-                                            @if ($caseStudy->is_ongoing)
-                                                Ongoing
-                                            @elseif($caseStudy->end_date)
-                                                {{ $caseStudy->end_date->format('M Y') }}
+                                            @if($blog->cover_image)
+                                                <img src="{{ asset($blog->cover_image) }}" class="img-fluid rounded"
+                                                    alt="Blog Cover" style="width: 80px; height: auto;">
                                             @else
-                                                -
+                                                <span class="text-muted">No image</span>
                                             @endif
                                         </td>
+                                        <td>{{ $blog->title }}</td>
+                                        <td>{{ $blog->tags }}</td>
                                         <td>
-                                            <a href="{{ route('admin.case-studies.edit', $caseStudy->id) }}"
+                                            <a href="{{ route('admin.blogs.edit', $blog->id) }}"
                                                 class="btn btn-sm btn-primary">Edit</a>
-                                            <form action="{{ route('admin.case-studies.destroy', $caseStudy->id) }}"
+                                            <form action="{{ route('admin.blogs.destroy', $blog->id) }}"
                                                 method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                    onclick="return confirm('Delete this case study?')">Delete</button>
+                                                    onclick="return confirm('Delete this blog?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">No case studies found.</td>
+                                        <td colspan="5" class="text-center">No blogs found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -78,7 +70,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#caseStudiesTable').DataTable();
+            $('#blogsTable').DataTable();
         });
     </script>
 @endsection

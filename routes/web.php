@@ -96,6 +96,8 @@ Route::middleware('auth')->group(function () {
     //Case Studies
     Route::resource('/admin-panel/case-studies', App\Http\Controllers\Admin\CaseStudyController::class)->names('admin.case-studies');
 
+    //Blogs
+    Route::resource('/admin-panel/blogs', App\Http\Controllers\Admin\BlogController::class)->names('admin.blogs');
 
     //logout
     Route::post('/admin-panel/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
