@@ -42,20 +42,20 @@
                             <div class="contact__content">
                                 <div class="mb-30">
                                     <h5>Email Address</h5>
-                                    <p>contact@agenshark.com</p>
+                                    <p>{{ $websiteSetting->contact_email ?? 'info@webkye.in' }}</p>
                                 </div>
                                 <div class="mb-30">
                                     <h5>Phone Number</h5>
-                                    <p>+1 (123) 456-7890</p>
+                                    <p>+91 {{ $websiteSetting->contact_phone ?? '+91 9310498455' }}</p>
                                 </div>
                                 <div class="mb-30">
-                                    <h5>Headquarters Address</h5>
-                                    <p>7 York Street London, United Kingdom</p>
+                                    <h5>Address</h5>
+                                    <p>{{ $websiteSetting->address ?? 'New Delhi, India' }}</p>
                                 </div>
                                 <div>
                                     <h5>Business Hours</h5>
                                     <p>Monday- Friday, <br>
-                                        10;00 AM to 05:00 PM</p>
+                                        10:00 AM to 05:00 PM</p>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +264,7 @@
         <!-- Google map area end here -->
         <div class="contact__map">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15058515.66665815!2d24.50707531408513!3d22.861846684360664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15e7b33fe7952a41%3A0x5960504bc21ab69b!2sSaudi%20Arabia!5e0!3m2!1sen!2sbd!4v1713636459047!5m2!1sen!2sbd"
+                src="{{ $websiteSetting->location_url }}"
                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <!-- Google map area end here -->

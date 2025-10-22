@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FaqController as ControllersFaqController;
 
 Route::get('/', function () {
     return view('home');
@@ -35,9 +37,7 @@ Route::get('/case-studies', function () {
     return view('case-study');
 });
 
-Route::get('/faq', function () {
-    return view('faq');
-});
+Route::get('/faq',[ControllersFaqController::class,'index'])->name('faq');
 
 Route::get('/blogs', function () {
     return view('blog');
@@ -98,6 +98,10 @@ Route::middleware('auth')->group(function () {
 
     //Blogs
     Route::resource('/admin-panel/blogs', App\Http\Controllers\Admin\BlogController::class)->names('admin.blogs');
+    
+    //Website Settings
+    Route::get('/admin-panel/website-settings', [WebsiteSettingController::class, 'index'])->name('admin.website-settings.index');
+    Route::post('/admin-panel/website-settings', [WebsiteSettingController::class, 'update'])->name('admin.website-settings.update');
 
     //logout
     Route::post('/admin-panel/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');

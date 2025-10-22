@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ContactMessage;
+use App\Models\WebsiteSetting;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Share website settings with all views
+        View::share('websiteSetting', WebsiteSetting::first());
+        
         View::composer('admin.layouts.app', function ($view) {
             $unreadMessagesCount = ContactMessage::where('is_read', false)->count();
             // Pass the data to the sidebar component

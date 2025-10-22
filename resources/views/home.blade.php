@@ -1,13 +1,8 @@
 @extends('layout.app')
 
-@section('title', 'Webkye | Scalable & SEO-Friendly Web Development Solutions')
-@section('description',
-    'Looking for a website that looks great and converts visitors? Webkye builds powerful websites
-    designed for speed, SEO, and results.')
-@section('keywords',
-    'web development, web development services, custom website development, website development
-    company, professional web developers, responsive websites, web design and development, website development agency,
-    SEO-friendly websites, front-end development, back-end development, web application development')
+@section('title', $websiteSetting->site_name ?? 'Webkye | Scalable & SEO-Friendly Web Development Solutions')
+@section('description', $websiteSetting->meta_description ?? '')
+@section('keywords', $websiteSetting->meta_keywords ?? '')
 @section('author', 'Webkye')
 
 @section('content')

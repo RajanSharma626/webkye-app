@@ -24,8 +24,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.blogs.update', $blog->id) }}" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
-
+                        @method('PUT') 
                         <!-- Blog Fields -->
                         <div class="mb-3">
                             <label class="form-label">Title</label>

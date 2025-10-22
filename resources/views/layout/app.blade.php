@@ -60,33 +60,51 @@
                 </ul>
                 <div class="right-info">
                     <ul class="site-link">
-                        <li><a target="_blank" href="mailto:info@webkye.in">info@webkye.in</a></li>
                         <li><a target="_blank"
-                                href="https://api.whatsapp.com/send?phone=919310498455&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.">+91
-                                9310498455</a></li>
+                                href="mailto:{{ $websiteSetting->contact_email ?? 'info@webkye.in' }}">{{ $websiteSetting->contact_email ?? 'info@webkye.in' }}</a>
+                        </li>
+                        <li><a target="_blank"
+                                href="https://api.whatsapp.com/send?phone=91{{ $websiteSetting->contact_phone ?? '9310498455' }}&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.">+91
+                                {{ $websiteSetting->contact_phone ?? '9310498455' }}</a></li>
                     </ul>
                     <ul class="link-info">
-                        <li>
-                            <a href="https://www.facebook.com/people/WebKye/61557336916217/" target="_blank">
-                                <i class="bi bi-facebook text-light"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://api.whatsapp.com/send?phone=919310498455&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.">
-                                <i class="bi bi-whatsapp text-light"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/company/webkye" target="_blank">
-                                <i class="bi bi-linkedin text-light"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/webkye.in" target="_blank">
-                                <i class="bi bi-instagram text-light"></i>
-                            </a>
-                        </li>
+
+                        @if ($websiteSetting->contact_email)
+                            <li>
+                                <a href="mailto:{{ $websiteSetting->contact_email }}" target="_blank">
+                                    <i class="bi bi-envelope text-light"></i>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($websiteSetting->facebook_url)
+                            <li>
+                                <a href="{{ $websiteSetting->facebook_url }}" target="_blank">
+                                    <i class="bi bi-facebook text-light"></i>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($websiteSetting->contact_phone)
+                            <li>
+                                <a
+                                    href="https://api.whatsapp.com/send?phone=91{{ $websiteSetting->contact_phone }}&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.">
+                                    <i class="bi bi-whatsapp text-light"></i>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($websiteSetting->linkedin_url)
+                            <li>
+                                <a href="{{ $websiteSetting->linkedin_url }}" target="_blank">
+                                    <i class="bi bi-linkedin text-light"></i>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($websiteSetting->instagram_url)
+                            <li>
+                                <a href="{{ $websiteSetting->instagram_url }}" target="_blank">
+                                    <i class="bi bi-instagram text-light"></i>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -196,25 +214,36 @@
                         <p>Webkye is a global agency helping startups grow from idea to industry leader.
                         </p>
                         <div class="social-icons mt-20">
-                            <a href="https://www.facebook.com/people/WebKye/61557336916217/" target="_blank">
-                                <i class="bi bi-facebook text-light fs-3"></i>
-                            </a>
+                            @if ($websiteSetting->contact_email)
+                                <a href="mailto:{{ $websiteSetting->contact_email }}" target="_blank">
+                                    <i class="bi bi-envelope text-light fs-3"></i>
+                                </a>
+                            @endif
 
-                            <a
-                                href="https://api.whatsapp.com/send?phone=919310498455&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.">
-                                <i class="bi bi-whatsapp text-light fs-3"></i>
-                            </a>
+                            @if ($websiteSetting->facebook_url)
+                                <a href="{{ $websiteSetting->facebook_url }}" target="_blank">
+                                    <i class="bi bi-facebook text-light fs-3"></i>
+                                </a>
+                            @endif
 
+                            @if ($websiteSetting->contact_phone)
+                                <a
+                                    href="https://api.whatsapp.com/send?phone=91{{ $websiteSetting->contact_phone }}&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.">
+                                    <i class="bi bi-whatsapp text-light fs-3"></i>
+                                </a>
+                            @endif
 
-                            <a href="https://www.linkedin.com/company/webkye" target="_blank">
-                                <i class="bi bi-linkedin text-light fs-3"></i>
-                            </a>
+                            @if ($websiteSetting->linkedin_url)
+                                <a href="{{ $websiteSetting->linkedin_url }}" target="_blank">
+                                    <i class="bi bi-linkedin text-light fs-3"></i>
+                                </a>
+                            @endif
 
-
-                            <a href="https://www.instagram.com/webkye.in" target="_blank">
-                                <i class="bi bi-instagram text-light fs-3"></i>
-                            </a>
-
+                            @if ($websiteSetting->instagram_url)
+                                <a href="{{ $websiteSetting->instagram_url }}" target="_blank">
+                                    <i class="bi bi-instagram text-light fs-3"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="footer__item">
@@ -278,7 +307,7 @@
                                 d="M11.6309 2.55094C10.3989 1.33583 8.75455 0.666626 7.00066 0.666626C5.24674 0.666626 3.60236 1.33583 2.37036 2.55094C0.0779159 4.812 -0.280968 7.52721 1.30371 10.621C2.6035 13.1587 4.94433 15.4671 6.65356 17.1527L6.72063 17.2189C6.79799 17.2951 6.89931 17.3333 7.00066 17.3333C7.10202 17.3333 7.20341 17.2951 7.2807 17.2189L7.3479 17.1526C9.05707 15.467 11.3979 13.1585 12.6976 10.6209C14.2823 7.52714 13.9234 4.812 11.6309 2.55094ZM11.9907 10.2687C10.8001 12.5932 8.64884 14.7628 7.00066 16.3902C5.35252 14.7628 3.20123 12.5931 2.01069 10.2688C0.577693 7.47102 0.878523 5.12721 2.93047 3.10338C4.05263 1.99661 5.52665 1.44319 7.00063 1.44319C8.47465 1.44319 9.94866 1.99657 11.0708 3.10338C13.1227 5.12717 13.4236 7.47099 11.9907 10.2687ZM7.00063 4.6314C5.39641 4.6314 4.09125 5.91871 4.09125 7.501C4.09125 9.08329 5.39641 10.3706 7.00063 10.3706C8.60488 10.3706 9.91005 9.08329 9.91005 7.501C9.91005 5.91871 8.60491 4.6314 7.00063 4.6314ZM7.00063 9.58935C5.83315 9.58935 4.88334 8.65253 4.88334 7.501C4.88334 6.34947 5.83315 5.41265 7.00063 5.41265C8.16814 5.41265 9.11796 6.34947 9.11796 7.501C9.11796 8.65253 8.16814 9.58935 7.00063 9.58935Z"
                                 fill="white" fill-opacity="0.7" />
                         </svg>
-                        New Delhi, India</a>
+                        {{ $websiteSetting->address ?? 'New Delhi, India' }}</a>
                 </div>
             </div>
         </footer>
