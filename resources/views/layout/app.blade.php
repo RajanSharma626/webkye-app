@@ -122,7 +122,7 @@
     <div class="sidebar-area offcanvas offcanvas-end" id="menubar">
         <div class="offcanvas-header">
             <a class='logo' href='/'>
-                <img src="assets/images/logo/logo-light.svg" alt="logo">
+                <img src="{{ asset($websiteSetting->logo ?? 'assets/images/logo/logo-light.svg') }}" alt="logo">
             </a>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"><i
                     class="fa-regular fa-xmark"></i></button>
