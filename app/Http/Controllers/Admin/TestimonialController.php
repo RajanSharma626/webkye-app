@@ -37,7 +37,7 @@ class TestimonialController extends Controller
             'star' => ['required', 'integer', 'min:1', 'max:5'],
             'title' => ['required', 'string', 'max:255'],
             'comment' => ['required', 'string'],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'], 
             'designation' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
@@ -45,8 +45,10 @@ class TestimonialController extends Controller
         ]);
 
         if ($request->hasFile('profile')) {
-            $path = $request->file('profile')->store('testimonials', 'public');
-            $validated['profile'] = $path;
+            $profileFile = $request->file('profile'); 
+            $profileName = time() . '_profile_' . $profileFile->getClientOriginalName();
+            $profileFile->move(public_path('uploads/testimonials'), $profileName);
+            $validated['profile'] = 'uploads/testimonials/' . $profileName;
         }
 
         $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
@@ -96,8 +98,10 @@ class TestimonialController extends Controller
             if ($testimonial->profile) {
                 Storage::disk('public')->delete($testimonial->profile);
             }
-            $path = $request->file('profile')->store('testimonials', 'public');
-            $validated['profile'] = $path;
+            $profileFile = $request->file('profile');
+            $profileName = time() . '_profile_' . $profileFile->getClientOriginalName();
+            $profileFile->move(public_path('uploads/testimonials'), $profileName);
+            $validated['profile'] = 'uploads/testimonials/' . $profileName;
         }
 
         $validated['is_active'] = (bool) ($validated['is_active'] ?? false);

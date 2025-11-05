@@ -3,7 +3,7 @@
         <div class="container">
             <div class="header__main header__main-one">
                 <a class='logo' href='/'>
-                    <img src="assets/images/logo/logo.svg" alt="logo">
+                    <img src="{{ $websiteSetting->logo ?? 'assets/images/logo/logo.png' }}" alt="logo">
                 </a>
                 <div class="main-menu">
                     <nav>
@@ -33,7 +33,7 @@
         <div class="container">
             <div class="header__main">
                 <a class='logo' href='/'>
-                    <img src="assets/images/logo/logo.svg" alt="logo">
+                    <img src="{{ $websiteSetting->logo ?? 'assets/images/logo/logo.png' }}" alt="logo">
                 </a>
                 <div class="main-menu">
                     <nav>

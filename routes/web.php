@@ -9,39 +9,38 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController as ControllersFaqController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CaseStudyPageController;
+use App\Http\Controllers\BlogPageController;
+use App\Http\Controllers\NewsletterController;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/home', function () {
-    return view('home');
-});
+Route::get('/home', [HomeController::class, 'index']);
 
-Route::get('/about', function () {
-    return view('about');
-});
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::get('/contact-us', function () {
     return view('contact');
-});
+})->name('contact');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
+// Newsletter subscription (rate limited to 3 attempts per minute)
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->middleware('throttle:3,1')
+    ->name('newsletter.subscribe');
 
 Route::get('/services', function () {
     return view('service');
 });
 
-Route::get('/case-studies', function () {
-    return view('case-study');
-});
+Route::get('/case-studies', [CaseStudyPageController::class, 'index'])->name('case-studies');
 
 Route::get('/faq',[ControllersFaqController::class,'index'])->name('faq');
 
-Route::get('/blogs', function () {
-    return view('blog');
-});
+Route::get('/blogs', [BlogPageController::class, 'index'])->name('blogs');
 
 Route::get('/blog/blog-detail', function () {
     return view('blog-details');
@@ -102,6 +101,10 @@ Route::middleware('auth')->group(function () {
     //Website Settings
     Route::get('/admin-panel/website-settings', [WebsiteSettingController::class, 'index'])->name('admin.website-settings.index');
     Route::post('/admin-panel/website-settings', [WebsiteSettingController::class, 'update'])->name('admin.website-settings.update');
+
+    //Newsletter Subscribers
+    Route::get('/admin-panel/newsletters', [App\Http\Controllers\Admin\NewsletterController::class, 'index'])->name('admin.newsletters.index');
+    Route::delete('/admin-panel/newsletters/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'destroy'])->name('admin.newsletters.destroy');
 
     //logout
     Route::post('/admin-panel/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');

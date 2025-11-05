@@ -52,8 +52,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Icon</label>
-                            <input type="text" name="icon" class="form-control" value="{{ old('icon') }}">
+                            <label class="form-label">Icon (SVG HTML Code)</label>
+                            <textarea name="icon" class="form-control" rows="6" placeholder="Paste SVG code here">{{ old('icon') }}</textarea>
+                            <small class="text-muted">Paste the complete SVG HTML code for the service icon</small>
                         </div>
                         
                         <!-- Meta SEO Fields -->

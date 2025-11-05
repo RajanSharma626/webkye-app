@@ -12,6 +12,7 @@ class Service extends Model
         'short_description',
         'detail',
         'banner',
+        'icon',
         'meta_title',
         'meta_description',
         'meta_keywords'

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="hk-pg-wrapper">
-	<div class="container-xxl">
+	<div class="container-xxl"> 
 		<div class="hk-pg-header d-flex justify-content-between align-items-center">
 			<h4 class="hk-pg-title">Contact Messages</h4>
 		</div>

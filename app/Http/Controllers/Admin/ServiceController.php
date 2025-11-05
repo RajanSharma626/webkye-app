@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -42,12 +40,14 @@ class ServiceController extends Controller
             'meta_description' => ['nullable', 'string'],
             'meta_keywords' => ['nullable', 'string'],
             'banner' => ['nullable', 'image', 'max:2048'],
-            'icon' => ['nullable', 'string', 'max:255'],
+            'icon' => ['nullable', 'string'],
         ]);
 
         if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('services', 'public');
-            $validated['banner'] = $path;
+            $bannerFile = $request->file('banner');
+            $bannerName = time() . '_banner_' . $bannerFile->getClientOriginalName();
+            $bannerFile->move(public_path('uploads/services'), $bannerName);
+            $validated['banner'] = 'uploads/services/' . $bannerName;
         }
 
         \App\Models\Service::create($validated);
@@ -88,15 +88,17 @@ class ServiceController extends Controller
             'meta_description' => ['nullable', 'string'],
             'meta_keywords' => ['nullable', 'string'],
             'banner' => ['nullable', 'image', 'max:2048'],
-            'icon' => ['nullable', 'string', 'max:255'],
+            'icon' => ['nullable', 'string'],
         ]);
 
         if ($request->hasFile('banner')) {
             if ($service->banner) {
-                Storage::disk('public')->delete($service->banner);
+                unlink(public_path($service->banner));
             }
-            $path = $request->file('banner')->store('services', 'public');
-            $validated['banner'] = $path;
+            $bannerFile = $request->file('banner');
+            $bannerName = time() . '_banner_' . $bannerFile->getClientOriginalName();
+            $bannerFile->move(public_path('uploads/services'), $bannerName);
+            $validated['banner'] = 'uploads/services/' . $bannerName;
         }
 
         $service->update($validated);
@@ -111,7 +113,7 @@ class ServiceController extends Controller
     {
         $service = \App\Models\Service::findOrFail($id);
         if ($service->banner) {
-            Storage::disk('public')->delete($service->banner);
+            unlink(public_path($service->banner));
         }
         $service->delete();
 

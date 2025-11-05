@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <!-- Style css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    @stack('head')
 </head>
 
 <body>
@@ -209,7 +211,7 @@
                 <div class="footer__wrp pb-60">
                     <div class="footer__item footer-about">
                         <a class='logo mb-4' href='/'>
-                            <img src="assets/images/logo/logo-mix.svg" alt="logo">
+                            <img src="{{ asset($websiteSetting->footer_logo ?? 'assets/images/logo/logo.png') }}" alt="logo">
                         </a>
                         <p>Webkye is a global agency helping startups grow from idea to industry leader.
                         </p>
@@ -285,17 +287,20 @@
                     </div>
                     <div class="footer__item footer-subscribe">
                         <h3>Subscribe Now</h3>
-                        <div class="subscribe-feild">
-                            <input type="text" placeholder="Enter email address">
-                            <button><i class="fa-light fa-arrow-up-right"></i></button>
-                        </div>
-                        <div class="form-check mt-20">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                checked>
-                            <label class="form-check-label" for="flexCheckDefault">
-                                by signing up, you agree to receive mail
-                            </label>
-                        </div>
+                        <form id="newsletterForm">
+                            @csrf
+                            <div class="subscribe-feild">
+                                <input type="email" name="email" id="newsletter_email" placeholder="Enter email address" required>
+                                <button type="submit"><i class="fa-light fa-arrow-up-right"></i></button>
+                            </div>
+                            <div class="form-check mt-20">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                    checked>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    by signing up, you agree to receive mail
+                                </label>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="footer__copyright">
@@ -366,6 +371,85 @@
         })();
     </script>
     <!--End of Tawk.to Script-->
+
+    <!-- Bootstrap Toast Notification -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+        <div id="newsletterToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto" id="toastTitle">Newsletter</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                <!-- Message will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter AJAX Script -->
+    <script>
+        $(document).ready(function() {
+            $('#newsletterForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                var formData = {
+                    email: $('#newsletter_email').val(),
+                    _token: $('input[name="_token"]').val()
+                };
+
+                $.ajax({
+                    url: '{{ route("newsletter.subscribe") }}',
+                    type: 'POST',
+                    data: formData,
+                    beforeSend: function() {
+                        $('#newsletterForm button[type="submit"]').prop('disabled', true);
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Show success toast
+                            showToast('success', response.message);
+                            // Reset form
+                            $('#newsletterForm')[0].reset();
+                        }
+                    },
+                    error: function(xhr) {
+                        var errorMessage = 'Something went wrong. Please try again.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        // Show error toast
+                        showToast('error', errorMessage);
+                    },
+                    complete: function() {
+                        $('#newsletterForm button[type="submit"]').prop('disabled', false);
+                    }
+                });
+            });
+
+            function showToast(type, message) {
+                var toastEl = document.getElementById('newsletterToast');
+                var toastTitle = document.getElementById('toastTitle');
+                var toastMessage = document.getElementById('toastMessage');
+                var toast = new bootstrap.Toast(toastEl, {
+                    animation: true,
+                    autohide: true,
+                    delay: 5000
+                });
+
+                // Set toast style based on type
+                toastEl.classList.remove('bg-success', 'bg-danger', 'text-white');
+                if (type === 'success') {
+                    toastEl.classList.add('bg-success', 'text-white');
+                    toastTitle.textContent = 'Success!';
+                } else {
+                    toastEl.classList.add('bg-danger', 'text-white');
+                    toastTitle.textContent = 'Error!';
+                }
+
+                toastMessage.textContent = message;
+                toast.show();
+            }
+        });
+    </script>
 </body>
 
 

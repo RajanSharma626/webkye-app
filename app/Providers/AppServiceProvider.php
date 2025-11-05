@@ -23,14 +23,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Share website settings with all views
-        View::share('websiteSetting', WebsiteSetting::first());
+        try {
+            View::share('websiteSetting', WebsiteSetting::first());
+        } catch (\Exception $e) {
+            // Table doesn't exist yet (during migrations)
+            View::share('websiteSetting', null);
+        }
         
         View::composer('admin.layouts.app', function ($view) {
-            $unreadMessagesCount = ContactMessage::where('is_read', false)->count();
-            // Pass the data to the sidebar component
-            $view->with([
-                'unreadMessagesCount' => $unreadMessagesCount,
-            ],);
+            try {
+                $unreadMessagesCount = ContactMessage::where('is_read', false)->count();
+                // Pass the data to the sidebar component
+                $view->with([
+                    'unreadMessagesCount' => $unreadMessagesCount,
+                ]);
+            } catch (\Exception $e) {
+                // Table doesn't exist yet (during migrations)
+                $view->with([
+                    'unreadMessagesCount' => 0,
+                ]);
+            }
         });
     }
 }

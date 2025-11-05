@@ -94,7 +94,8 @@
                                     <input id="company-name" type="text" name="company" value="{{ old('company') }}" placeholder="Enter your company name">
                                     <label for="massage">Message</label>
                                     <textarea name="message" id="massage" placeholder="Enter your message here" required>{{ old('message') }}</textarea>
-                                    <button type="submit" class="btn-three mt-50">Send us Message<i class="fa-regular fa-arrow-right"></i></button>
+                                    
+                                    <button type="submit" class="btn-three mt-30">Send us Message<i class="fa-regular fa-arrow-right"></i></button>
                                 </form>
                             </div>
                         </div>

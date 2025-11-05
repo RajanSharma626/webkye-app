@@ -175,146 +175,77 @@
             </div>
             <div class="swiper testimonial-two__slider">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="testimonial-two__item">
-                            <svg class="coma" width="48" height="48" viewBox="0 0 48 48" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.89997 28.8599C8.91 31.3499 7.35003 33.8099 5.26501 36.18C4.60501 36.93 4.51501 38.0099 5.055 38.8499C5.47504 39.5099 6.16498 39.8699 6.91498 39.8699C7.125 39.8699 7.33503 39.855 7.54504 39.7799C11.955 38.4899 22.26 33.9149 22.545 19.2449C22.65 13.59 18.51 8.72998 13.125 8.17498C10.14 7.87496 7.17004 8.8499 4.965 10.8299C2.76004 12.8249 1.5 15.675 1.5 18.6449C1.5 23.5949 5.01004 27.93 9.89997 28.8599Z"
-                                    fill="#256E56" />
-                                <path
-                                    d="M37.0652 8.17498C34.0951 7.87496 31.1251 8.8499 28.9202 10.8299C26.7151 12.8249 25.4551 15.675 25.4551 18.6449C25.4551 23.5949 28.9651 27.9299 33.8551 28.8599C32.8651 31.3499 31.3051 33.8099 29.2201 36.1799C28.5601 36.9299 28.4701 38.0099 29.0102 38.8499C29.4301 39.5099 30.1202 39.8699 30.8702 39.8699C31.0801 39.8699 31.2901 39.855 31.5001 39.7799C35.9101 38.4899 46.2151 33.9149 46.5001 19.2449V19.035C46.5001 13.4699 42.4052 8.72998 37.0652 8.17498Z"
-                                    fill="#256E56" />
-                            </svg>
-                            <div class="star d-flex gap-2 mb-2">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+                    @if($testimonials->count() > 0)
+                        @foreach($testimonials as $index => $testimonial)
+                            <div class="swiper-slide">
+                                <div class="testimonial-two__item {{ $index % 2 != 0 ? 'mt-80' : '' }}">
+                                    <svg class="coma" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.89997 28.8599C8.91 31.3499 7.35003 33.8099 5.26501 36.18C4.60501 36.93 4.51501 38.0099 5.055 38.8499C5.47504 39.5099 6.16498 39.8699 6.91498 39.8699C7.125 39.8699 7.33503 39.855 7.54504 39.7799C11.955 38.4899 22.26 33.9149 22.545 19.2449C22.65 13.59 18.51 8.72998 13.125 8.17498C10.14 7.87496 7.17004 8.8499 4.965 10.8299C2.76004 12.8249 1.5 15.675 1.5 18.6449C1.5 23.5949 5.01004 27.93 9.89997 28.8599Z"
+                                            fill="#256E56" />
+                                        <path
+                                            d="M37.0652 8.17498C34.0951 7.87496 31.1251 8.8499 28.9202 10.8299C26.7151 12.8249 25.4551 15.675 25.4551 18.6449C25.4551 23.5949 28.9651 27.9299 33.8551 28.8599C32.8651 31.3499 31.3051 33.8099 29.2201 36.1799C28.5601 36.9299 28.4701 38.0099 29.0102 38.8499C29.4301 39.5099 30.1202 39.8699 30.8702 39.8699C31.0801 39.8699 31.2901 39.855 31.5001 39.7799C35.9101 38.4899 46.2151 33.9149 46.5001 19.2449V19.035C46.5001 13.4699 42.4052 8.72998 37.0652 8.17498Z"
+                                            fill="#256E56" />
+                                    </svg>
+                                    <div class="star d-flex gap-2 mb-2">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            @if($i <= $testimonial->star)
+                                                <i class="fa-solid fa-star"></i>
+                                            @else
+                                                <i class="fa-regular fa-star"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    <h5 class="mb-10">{{ $testimonial->title }}</h5>
+                                    <p>{{ $testimonial->comment }}</p>
+                                    <div class="d-flex align-items-center gap-3 mt-30">
+                                        <img src="{{ asset($testimonial->profile) }}" alt="{{ $testimonial->name }}" width="50" height="50" class="rounded-circle">
+                                        <div>
+                                            <h5>{{ $testimonial->name }}</h5>
+                                            <span>{{ $testimonial->designation }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <h5 class="mb-10">They transformed our online presence!</h5>
-                            <p>"Working with Agenshark has been a game changer for our digital presence. Their
-                                data-driven
-                                approach to SEO catapulted
-                                us to the top of search results, significantly boosting our online visibility. The
-                                results
-                                were not just immediate but
-                                sustained.</p>
-                            <div class="d-flex align-items-center gap-3 mt-30">
-                                <img src="assets/images/testimonial/user1.png" alt="image">
-                                <div>
-                                    <h5>Kawser Ahmed</h5>
-                                    <span>COO, PQR Solutions</span>
+                        @endforeach
+                    @else
+                        <div class="swiper-slide">
+                            <div class="testimonial-two__item">
+                                <svg class="coma" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.89997 28.8599C8.91 31.3499 7.35003 33.8099 5.26501 36.18C4.60501 36.93 4.51501 38.0099 5.055 38.8499C5.47504 39.5099 6.16498 39.8699 6.91498 39.8699C7.125 39.8699 7.33503 39.855 7.54504 39.7799C11.955 38.4899 22.26 33.9149 22.545 19.2449C22.65 13.59 18.51 8.72998 13.125 8.17498C10.14 7.87496 7.17004 8.8499 4.965 10.8299C2.76004 12.8249 1.5 15.675 1.5 18.6449C1.5 23.5949 5.01004 27.93 9.89997 28.8599Z"
+                                        fill="#256E56" />
+                                    <path
+                                        d="M37.0652 8.17498C34.0951 7.87496 31.1251 8.8499 28.9202 10.8299C26.7151 12.8249 25.4551 15.675 25.4551 18.6449C25.4551 23.5949 28.9651 27.9299 33.8551 28.8599C32.8651 31.3499 31.3051 33.8099 29.2201 36.1799C28.5601 36.9299 28.4701 38.0099 29.0102 38.8499C29.4301 39.5099 30.1202 39.8699 30.8702 39.8699C31.0801 39.8699 31.2901 39.855 31.5001 39.7799C35.9101 38.4899 46.2151 33.9149 46.5001 19.2449V19.035C46.5001 13.4699 42.4052 8.72998 37.0652 8.17498Z"
+                                        fill="#256E56" />
+                                </svg>
+                                <div class="star d-flex gap-2 mb-2">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <h5 class="mb-10">They transformed our online presence!</h5>
+                                <p>"Working with Agenshark has been a game changer for our digital presence. Their
+                                    data-driven
+                                    approach to SEO catapulted
+                                    us to the top of search results, significantly boosting our online visibility. The
+                                    results
+                                    were not just immediate but
+                                    sustained.</p>
+                                <div class="d-flex align-items-center gap-3 mt-30">
+                                    <img src="assets/images/testimonial/user1.png" alt="image">
+                                    <div>
+                                        <h5>Kawser Ahmed</h5>
+                                        <span>COO, PQR Solutions</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-two__item mt-80">
-                            <svg class="coma" width="48" height="48" viewBox="0 0 48 48" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.89997 28.8599C8.91 31.3499 7.35003 33.8099 5.26501 36.18C4.60501 36.93 4.51501 38.0099 5.055 38.8499C5.47504 39.5099 6.16498 39.8699 6.91498 39.8699C7.125 39.8699 7.33503 39.855 7.54504 39.7799C11.955 38.4899 22.26 33.9149 22.545 19.2449C22.65 13.59 18.51 8.72998 13.125 8.17498C10.14 7.87496 7.17004 8.8499 4.965 10.8299C2.76004 12.8249 1.5 15.675 1.5 18.6449C1.5 23.5949 5.01004 27.93 9.89997 28.8599Z"
-                                    fill="#256E56" />
-                                <path
-                                    d="M37.0652 8.17498C34.0951 7.87496 31.1251 8.8499 28.9202 10.8299C26.7151 12.8249 25.4551 15.675 25.4551 18.6449C25.4551 23.5949 28.9651 27.9299 33.8551 28.8599C32.8651 31.3499 31.3051 33.8099 29.2201 36.1799C28.5601 36.9299 28.4701 38.0099 29.0102 38.8499C29.4301 39.5099 30.1202 39.8699 30.8702 39.8699C31.0801 39.8699 31.2901 39.855 31.5001 39.7799C35.9101 38.4899 46.2151 33.9149 46.5001 19.2449V19.035C46.5001 13.4699 42.4052 8.72998 37.0652 8.17498Z"
-                                    fill="#256E56" />
-                            </svg>
-                            <div class="star d-flex gap-2 mb-2">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h5 class="mb-10">AgenShark delivers on promises!</h5>
-                            <p>"Working with Agenshark has been a game changer for our digital presence. Their
-                                data-driven
-                                approach to SEO catapulted
-                                us to the top of search results, significantly boosting our online visibility. The
-                                results
-                                were not just immediate but
-                                sustained.</p>
-                            <div class="d-flex align-items-center gap-3 mt-30">
-                                <img src="assets/images/testimonial/user2.png" alt="image">
-                                <div>
-                                    <h5>Suborna Islam</h5>
-                                    <span>Marketing Director, Kingosto Tech</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-two__item">
-                            <svg class="coma" width="48" height="48" viewBox="0 0 48 48" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.89997 28.8599C8.91 31.3499 7.35003 33.8099 5.26501 36.18C4.60501 36.93 4.51501 38.0099 5.055 38.8499C5.47504 39.5099 6.16498 39.8699 6.91498 39.8699C7.125 39.8699 7.33503 39.855 7.54504 39.7799C11.955 38.4899 22.26 33.9149 22.545 19.2449C22.65 13.59 18.51 8.72998 13.125 8.17498C10.14 7.87496 7.17004 8.8499 4.965 10.8299C2.76004 12.8249 1.5 15.675 1.5 18.6449C1.5 23.5949 5.01004 27.93 9.89997 28.8599Z"
-                                    fill="#256E56" />
-                                <path
-                                    d="M37.0652 8.17498C34.0951 7.87496 31.1251 8.8499 28.9202 10.8299C26.7151 12.8249 25.4551 15.675 25.4551 18.6449C25.4551 23.5949 28.9651 27.9299 33.8551 28.8599C32.8651 31.3499 31.3051 33.8099 29.2201 36.1799C28.5601 36.9299 28.4701 38.0099 29.0102 38.8499C29.4301 39.5099 30.1202 39.8699 30.8702 39.8699C31.0801 39.8699 31.2901 39.855 31.5001 39.7799C35.9101 38.4899 46.2151 33.9149 46.5001 19.2449V19.035C46.5001 13.4699 42.4052 8.72998 37.0652 8.17498Z"
-                                    fill="#256E56" />
-                            </svg>
-                            <div class="star d-flex gap-2 mb-2">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h5 class="mb-10">Innovative Strategies, Tangible Results</h5>
-                            <p>"Working with Agenshark has been a game changer for our digital presence. Their
-                                data-driven
-                                approach to SEO catapulted
-                                us to the top of search results, significantly boosting our online visibility. The
-                                results
-                                were not just immediate but
-                                sustained.</p>
-                            <div class="d-flex align-items-center gap-3 mt-30">
-                                <img src="assets/images/testimonial/user3.png" alt="image">
-                                <div>
-                                    <h5>Pranto Das</h5>
-                                    <span>CEO, WPCobra IT Limited</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-two__item mt-80">
-                            <svg class="coma" width="48" height="48" viewBox="0 0 48 48" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.89997 28.8599C8.91 31.3499 7.35003 33.8099 5.26501 36.18C4.60501 36.93 4.51501 38.0099 5.055 38.8499C5.47504 39.5099 6.16498 39.8699 6.91498 39.8699C7.125 39.8699 7.33503 39.855 7.54504 39.7799C11.955 38.4899 22.26 33.9149 22.545 19.2449C22.65 13.59 18.51 8.72998 13.125 8.17498C10.14 7.87496 7.17004 8.8499 4.965 10.8299C2.76004 12.8249 1.5 15.675 1.5 18.6449C1.5 23.5949 5.01004 27.93 9.89997 28.8599Z"
-                                    fill="#256E56" />
-                                <path
-                                    d="M37.0652 8.17498C34.0951 7.87496 31.1251 8.8499 28.9202 10.8299C26.7151 12.8249 25.4551 15.675 25.4551 18.6449C25.4551 23.5949 28.9651 27.9299 33.8551 28.8599C32.8651 31.3499 31.3051 33.8099 29.2201 36.1799C28.5601 36.9299 28.4701 38.0099 29.0102 38.8499C29.4301 39.5099 30.1202 39.8699 30.8702 39.8699C31.0801 39.8699 31.2901 39.855 31.5001 39.7799C35.9101 38.4899 46.2151 33.9149 46.5001 19.2449V19.035C46.5001 13.4699 42.4052 8.72998 37.0652 8.17498Z"
-                                    fill="#256E56" />
-                            </svg>
-                            <div class="star d-flex gap-2 mb-2">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h5 class="mb-10">AgenShark delivers on promises!</h5>
-                            <p>"Working with Agenshark has been a game changer for our digital presence. Their
-                                data-driven
-                                approach to SEO catapulted
-                                us to the top of search results, significantly boosting our online visibility. The
-                                results
-                                were not just immediate but
-                                sustained.</p>
-                            <div class="d-flex align-items-center gap-3 mt-30">
-                                <img src="assets/images/testimonial/user4.png" alt="image">
-                                <div>
-                                    <h5>Mohmoud Ariful</h5>
-                                    <span>COO, PQR Solutions</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="mt-60">
                     <div class="swiper-two__info">

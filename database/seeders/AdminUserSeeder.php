@@ -19,5 +19,3 @@ class AdminUserSeeder extends Seeder
         );
     }
 }
-
-

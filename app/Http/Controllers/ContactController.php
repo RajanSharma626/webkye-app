@@ -18,7 +18,13 @@ class ContactController extends Controller
             'message' => ['required', 'string'],
         ]);
 
-        ContactMessage::create($validated);
+        ContactMessage::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'company' => $validated['company'],
+            'message' => $validated['message'],
+        ]);
 
         return back()->with('success', 'Thank you! We\'ve received your message.');
     }
