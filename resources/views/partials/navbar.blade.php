@@ -3,7 +3,8 @@
         <div class="container">
             <div class="header__main header__main-one">
                 <a class='logo' href='/'>
-                    <img src="{{ asset($websiteSetting->logo ?? 'assets/images/logo/logo.png') }}" alt="logo">
+                    <img src="{{ asset($websiteSetting->logo ?? 'assets/images/logo/logo.png') }}" class="d-none d-lg-block" alt="logo">                    
+                    <img src="{{ asset('assets/images/logo/logo-mob.png') }}" class="d-block d-lg-none img-fluid" style="width: 50px;" alt="logo">                    
                 </a>
                 <div class="main-menu">
                     <nav>
@@ -33,7 +34,8 @@
         <div class="container">
             <div class="header__main">
                 <a class='logo' href='/'>
-                    <img src="{{ asset($websiteSetting->logo ?? 'assets/images/logo/logo.png') }}" alt="logo">
+                    <img src="{{ asset($websiteSetting->logo ?? 'assets/images/logo/logo.png') }}" class="d-none d-lg-block" alt="logo">                    
+                    <img src="{{ asset('assets/images/logo/logo-mob.png') }}" class="d-block d-lg-none img-fluid" style="width: 50px;" alt="logo">  
                 </a>
                 <div class="main-menu">
                     <nav>
