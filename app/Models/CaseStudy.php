@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class CaseStudy extends Model
 {
     protected $fillable = [
         'title',
+        'slug',
         'service',
         'start_date',
         'end_date',
@@ -25,4 +27,24 @@ class CaseStudy extends Model
         'end_date' => 'date',
         'is_ongoing' => 'boolean'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (self $caseStudy) {
+            $caseStudy->slug = Str::slug($caseStudy->title);
+        });
+
+        static::updating(function (self $caseStudy) {
+            if ($caseStudy->isDirty('title')) {
+                $caseStudy->slug = Str::slug($caseStudy->title);
+            }
+        });
+    }
+
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
+    }
 }

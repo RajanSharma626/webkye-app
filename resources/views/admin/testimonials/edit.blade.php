@@ -42,6 +42,18 @@
 						<textarea name="comment" class="form-control" rows="5" required>{{ old('comment', $testimonial->comment) }}</textarea>
 					</div>
 
+					<div class="mb-3">
+						<label class="form-label">Related Case Study</label>
+						<select name="case_study_id" class="form-select">
+							<option value="">-- None --</option>
+							@foreach ($caseStudies as $caseStudy)
+								<option value="{{ $caseStudy->id }}" {{ (string) old('case_study_id', $testimonial->case_study_id) === (string) $caseStudy->id ? 'selected' : '' }}>
+									{{ $caseStudy->title }}
+								</option>
+							@endforeach
+						</select>
+					</div>
+
 					<div class="row g-3">
 						<div class="col-md-6">
 							<label class="form-label">Name</label>
@@ -59,7 +71,7 @@
 							<input type="file" name="profile" class="form-control" accept="image/*">
 							@if ($testimonial->profile)
 								<div class="mt-2">
-									<img src="{{ asset('storage/'.$testimonial->profile) }}" alt="Profile" height="60" class="rounded">
+									<img src="{{ asset($testimonial->profile) }}" alt="Profile" height="60" class="rounded">
 								</div>
 							@endif
 						</div>

@@ -15,5 +15,11 @@ class Testimonial extends Model
         'designation',
         'is_active',
         'position',
+        'case_study_id',
     ];
+
+    public function caseStudy()
+    {
+        return $this->belongsTo(CaseStudy::class);
+    }
 }

@@ -45,13 +45,17 @@
                                             <div class="col-lg-6">
                                                 <div class="story__item inner-page {{ $index == 2 ? 'mt-minus' : '' }}">
                                                     <div class="image">
-                                                        <img src="{{ asset($caseStudy->cover_image) }}"
-                                                            alt="{{ $caseStudy->title }}">
+                                                        @if ($caseStudy->cover_image)
+                                                            <img src="{{ asset($caseStudy->cover_image) }}"
+                                                                alt="{{ $caseStudy->title }}">
+                                                        @else
+                                                            <img src="assets/images/story/story-image1.png" alt="{{ $caseStudy->title }}">
+                                                        @endif
                                                     </div>
                                                     <div
                                                         class="d-flex align-items-center flex-wrap gap-3 justify-content-between mt-20">
                                                         <div>
-                                                            <h3 class="mb-2"><a href="#0">{{ $caseStudy->title }}</a>
+                                                            <h3 class="mb-2"><a href="{{ route('case-studies.show', $caseStudy->slug) }}">{{ $caseStudy->title }}</a>
                                                             </h3>
                                                             <div class="story__info">
                                                                 <ul>
@@ -62,7 +66,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div> <a href="{{ route('case-studies') }}" class="btn-one">View
+                                                        <div> <a href="{{ route('case-studies.show', $caseStudy->slug) }}" class="btn-one">View
                                                                 Case
                                                                 <span>
                                                                     <i class="fa-regular fa-arrow-up-right arry1"></i>

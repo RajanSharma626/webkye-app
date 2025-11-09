@@ -41,6 +41,18 @@
 						<textarea name="comment" class="form-control" rows="5" required>{{ old('comment') }}</textarea>
 					</div>
 
+					<div class="mb-3">
+						<label class="form-label">Related Case Study</label>
+						<select name="case_study_id" class="form-select">
+							<option value="">-- None --</option>
+							@foreach ($caseStudies as $caseStudy)
+								<option value="{{ $caseStudy->id }}" {{ old('case_study_id') == $caseStudy->id ? 'selected' : '' }}>
+									{{ $caseStudy->title }}
+								</option>
+							@endforeach
+						</select>
+					</div>
+
 					<div class="row g-3">
 						<div class="col-md-6">
 							<label class="form-label">Name</label>

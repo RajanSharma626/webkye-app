@@ -14,6 +14,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CaseStudyPageController;
 use App\Http\Controllers\BlogPageController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ServicePageController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -32,11 +33,25 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
     ->middleware('throttle:3,1')
     ->name('newsletter.subscribe');
 
-Route::get('/services', function () {
-    return view('service');
+Route::get('/services', [ServicePageController::class, 'index'])->name('services');
+
+Route::get('/services/service-details', function () {
+    return redirect()->route('services');
+});
+
+Route::get('/service-details.html', function () {
+    return redirect()->route('services');
 });
 
 Route::get('/case-studies', [CaseStudyPageController::class, 'index'])->name('case-studies');
+
+Route::get('/case-studies/case-study-details', function () {
+    return redirect()->route('case-studies');
+});
+
+Route::get('/case-study-details.html', function () {
+    return redirect()->route('case-studies');
+});
 
 Route::get('/faq',[ControllersFaqController::class,'index'])->name('faq');
 
@@ -58,13 +73,10 @@ Route::get('/term-condition', function () {
     return view('term-condition');
 });
 
-Route::get('/services/service-details', function () {
-    return view('service-details');
-});
+Route::get('/services/{service:slug}', [ServicePageController::class, 'show'])->name('services.show');
 
-Route::get('/case-studies/case-study-details', function () {
-    return view('case-study-details');
-});
+Route::get('/case-studies/{caseStudy:slug}', [CaseStudyPageController::class, 'show'])->name('case-studies.show');
+
 
 
 

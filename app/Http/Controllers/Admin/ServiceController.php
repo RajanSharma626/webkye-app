@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -32,7 +33,7 @@ class ServiceController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', 'unique:services,title'],
             'subtitle' => ['required', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
             'detail' => ['required', 'string'],
@@ -80,7 +81,7 @@ class ServiceController extends Controller
         $service = \App\Models\Service::findOrFail($id);
 
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', Rule::unique('services', 'title')->ignore($service->id)],
             'subtitle' => ['required', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
             'detail' => ['required', 'string'],

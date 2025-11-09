@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CaseStudy;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class TestimonialController extends Controller
@@ -16,7 +16,10 @@ class TestimonialController extends Controller
      */
     public function index(): View
     {
-        $testimonials = Testimonial::orderBy('position')->orderByDesc('created_at')->paginate(15);
+        $testimonials = Testimonial::with('caseStudy')
+            ->orderBy('position')
+            ->orderByDesc('created_at')
+            ->paginate(15);
         return view('admin.testimonials.index', compact('testimonials'));
     }
 
@@ -25,7 +28,9 @@ class TestimonialController extends Controller
      */
     public function create(): View
     {
-        return view('admin.testimonials.create');
+        $caseStudies = CaseStudy::orderBy('title')->get(['id', 'title']);
+
+        return view('admin.testimonials.create', compact('caseStudies'));
     }
 
     /**
@@ -42,6 +47,7 @@ class TestimonialController extends Controller
             'position' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
             'profile' => ['nullable', 'image', 'max:2048'],
+            'case_study_id' => ['nullable', 'exists:case_studies,id'],
         ]);
 
         if ($request->hasFile('profile')) {
@@ -51,8 +57,9 @@ class TestimonialController extends Controller
             $validated['profile'] = 'uploads/testimonials/' . $profileName;
         }
 
-        $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
+        $validated['is_active'] = (bool) ($request->boolean('is_active'));
         $validated['position'] = $validated['position'] ?? 0;
+        $validated['case_study_id'] = $validated['case_study_id'] ?? null;
 
         Testimonial::create($validated);
 
@@ -73,7 +80,9 @@ class TestimonialController extends Controller
     public function edit(string $id): View
     {
         $testimonial = Testimonial::findOrFail($id);
-        return view('admin.testimonials.edit', compact('testimonial'));
+        $caseStudies = CaseStudy::orderBy('title')->get(['id', 'title']);
+
+        return view('admin.testimonials.edit', compact('testimonial', 'caseStudies'));
     }
 
     /**
@@ -92,11 +101,12 @@ class TestimonialController extends Controller
             'position' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
             'profile' => ['nullable', 'image', 'max:2048'],
+            'case_study_id' => ['nullable', 'exists:case_studies,id'],
         ]);
 
         if ($request->hasFile('profile')) {
-            if ($testimonial->profile) {
-                Storage::disk('public')->delete($testimonial->profile);
+            if ($testimonial->profile && file_exists(public_path($testimonial->profile))) {
+                unlink(public_path($testimonial->profile));
             }
             $profileFile = $request->file('profile');
             $profileName = time() . '_profile_' . $profileFile->getClientOriginalName();
@@ -104,8 +114,9 @@ class TestimonialController extends Controller
             $validated['profile'] = 'uploads/testimonials/' . $profileName;
         }
 
-        $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
+        $validated['is_active'] = (bool) ($request->boolean('is_active'));
         $validated['position'] = $validated['position'] ?? 0;
+        $validated['case_study_id'] = $validated['case_study_id'] ?? null;
 
         $testimonial->update($validated);
 
@@ -118,8 +129,8 @@ class TestimonialController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         $testimonial = Testimonial::findOrFail($id);
-        if ($testimonial->profile) {
-            Storage::disk('public')->delete($testimonial->profile);
+        if ($testimonial->profile && file_exists(public_path($testimonial->profile))) {
+            unlink(public_path($testimonial->profile));
         }
         $testimonial->delete();
 

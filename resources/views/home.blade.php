@@ -195,7 +195,7 @@
                                         <h4 class="splt-txt wow" data-splitting>{{ $service->title }}</h4>
                                     </div>
                                     <p class="mt-20 pb-20 fs-16">{{ $service->short_description }}</p>
-                                    <a href='service-details.html'>Learn More <i class="fa-light ms-1 fa-arrow-right"></i></a>
+                                    <a href='{{ route('services.show', $service->slug) }}'>Learn More <i class="fa-light ms-1 fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         @endforeach

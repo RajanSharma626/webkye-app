@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class BlogController extends Controller
@@ -33,7 +34,7 @@ class BlogController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', 'unique:blogs,title'],
             'tags' => ['nullable', 'string'],
             'content' => ['required', 'string'],
             'cover_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
@@ -89,7 +90,7 @@ class BlogController extends Controller
         $blog = Blog::findOrFail($id);
         
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', Rule::unique('blogs', 'title')->ignore($blog->id)],
             'tags' => ['nullable', 'string'],
             'content' => ['required', 'string'],
             'cover_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class CaseStudyController extends Controller
@@ -33,7 +34,7 @@ class CaseStudyController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', 'unique:case_studies,title'],
             'service' => ['required', 'string', 'max:255'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
@@ -100,7 +101,7 @@ class CaseStudyController extends Controller
         $caseStudy = CaseStudy::findOrFail($id);
         
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', Rule::unique('case_studies', 'title')->ignore($caseStudy->id)],
             'service' => ['required', 'string', 'max:255'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
